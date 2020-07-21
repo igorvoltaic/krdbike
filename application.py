@@ -172,6 +172,20 @@ def register():
     return render_template("register.html")
 
 
+@app.route("/check", methods=["GET"])
+def check():
+    """Return true if username available, else false, in JSON format"""
+    username = request.args.get("username")
+    # Query database for username
+    rows = db.execute("SELECT * FROM users WHERE username = :username", username=username)
+
+    # Ensure username not exists
+    if len(rows) == 0:
+        return jsonify(True), 200
+    else:
+        return jsonify(False), 200
+
+
 def errorhandler(e):
     """Handle error"""
     if not isinstance(e, HTTPException):
