@@ -31,6 +31,7 @@ Session(app)
 
 # Configure database
 db = SQL(os.environ['DATABASE_URL'])
+create_db_tables()
 
 
 @app.route("/")
